@@ -1,5 +1,20 @@
 local redInputSide = require("sides").right -- side to take redstone input from
 local autoScram = true -- should the program automatically SCRAM the reactor if meltdown conditions are detected?
+local controlRodRegistry = { -- what are the frequencies for the rod controllers by color?
+    { "b26599b0", "RED" },
+    { "37000bc7", "YELLOW" },
+    { "",         "GREEN" },
+    { "",         "BLUE" },
+    { "",         "PURPLE" }
+}
+-- frequencies for preprocessed output data
+local dataRegistry = { -- these values need to be 'chewed' by a logic reciever and resent on a seperate channel. NOTE: there MUST be a torch transmitting on each frequency, or the signal from the previous frequency will 'bleed' into the next
+    "2753b1b8",        -- col heat
+    "93061e02",        -- fuel heat
+    "f0a60078",        -- depletion
+    "c2f2282c",        -- xenon poison
+    "684166ec"         -- turbine throughput. oh yeah this one doesnt need 'chewing'
+}
 
 local cmp = require("component"); local serial; local fs; local comp = require("computer"); local active = true; local gpu =
     cmp.gpu; local ox, oy =
@@ -99,22 +114,6 @@ if hang then
 end
 
 term.clear()
-
-local controlRodRegistry = {
-    { "b26599b0", "RED" },
-    { "37000bc7", "YELLOW" },
-    { "",         "GREEN" },
-    { "",         "BLUE" },
-    { "",         "PURPLE" }
-}
-
-local dataRegistry = { -- these values need to be 'chewed' by a logic reciever and resent on a seperate channel. NOTE: there MUST be a torch transmitting on each frequency, or the signal from the previous frequency will 'bleed' into the next
-    "2753b1b8",        -- col heat
-    "93061e02",        -- fuel heat
-    "f0a60078",        -- depletion
-    "c2f2282c",        -- xenon poison
-    "684166ec"         -- turbine throughput. oh yeah this one doesnt need 'chewing'
-}
 local lrh = {
     { 0, "RED" },
     { 0, "YELLOW" },
@@ -345,7 +344,7 @@ gpu.setBackground(0xffffff)
 gpu.fill(1, 1, resX, 2, ' ')
 gpu.setForeground(0)
 gpu.set(1, 1, "RBMK WRECKER 2000")
-gpu.setBackground(0xc3c3c3); gpu.fill(1, 3, 19, 11, ' '); gpu.fill(37,3,resX-36,17,' '); gpu.set(2, 3, "SET  COLOR P LPV"); gpu.set(40,3,"GRAPH")
+gpu.setBackground(0xc3c3c3); gpu.fill(1, 3, 19, 11, ' '); gpu.fill(37,3,resX-36,18,' '); gpu.set(2, 3, "SET  COLOR P LPV"); gpu.set(40,3,"GRAPH")
 gpu.setBackground(0); gpu.fill(38,4,resX-38,15,' ');
 checkPresets(); os.sleep(.05)
 gpu.setBackground(0xa5a5a5)
@@ -363,10 +362,10 @@ local function graph(n)
     table.insert(gHist,n)
     if #gHist>resX-38 then table.remove(gHist,1) end
     local ob = gpu.getBackground()
-    gpu.setBackground(0); gpu.fill(38,4,resX-38,15,' ');
+    gpu.setBackground(0); gpu.fill(38,4,resX-38,16,' ');
     gpu.setBackground(0xffffff)
     for i,v in pairs(gHist) do
-        gpu.set(i+37,18-v,' ')
+        gpu.set(i+37,19-v,' ')
     end
     gpu.setBackground(ob)
 end
