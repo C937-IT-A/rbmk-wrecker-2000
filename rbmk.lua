@@ -5,14 +5,13 @@ local cmp = require("component"); local serial; local fs; local comp = require("
     cmp.gpu; local ox, oy =
     gpu.getResolution(); local term; local RoR; local input; local rednet; local threading = require("thread"); gpu
     .setResolution(60, 40); local resX, resY = gpu.getResolution(); gpu.setBackground(0); gpu.fill(1, 1, resX, resY, ' '); gpu
-    .setForeground(0xffffff); gpu.setBackground(0);
-gpu.set(1, 1, '╒') --corners of bounding box. 'set' command sets the text given in the third argument to the location given by the first two; (x, y, 'text')
-gpu.set(resX, 1, '╕') --since this is stinky Lua, everything is one-indexed... telling it to print at (0,0) is outside the bounds of the screen.
+    .setForeground(0xffffff);
+gpu.set(1, 1, '╒')
+gpu.set(resX, 1, '╕')
 gpu.set(1, resY, '╘')
 gpu.set(resX, resY, '╛')
-os.sleep(.01) -- short wait for flavor
-gpu.fill(2, 1, resX - 2, 1, '═') --sides of bounding box. 'fill' command makes copies of the character given in the fifth argument to the location given by the first two, and
---                             with the size defined by the second two. (x,y,sizeX,sizeY,'char')
+os.sleep(.01)
+gpu.fill(2, 1, resX - 2, 1, '═')
 gpu.fill(2, resY, resX - 2, 1, '═')
 gpu.fill(1, 2, 1, resY - 2, '│')
 gpu.fill(resX, 2, 1, resY - 2, '│')
@@ -23,22 +22,21 @@ local icl = ""
 local lty = 3
 local function newCheck(name, toLoad)
     threading.create(function()
-        local cy =
-            lty --stores current Y coordinate as a new variable as to not rely on the mutable 'lty' for future reference
-        gpu.set(3, lty, '☐ ' .. name) --prints out new undefined variable check
-        lty = lty + 1 --advances Y variable so subsequent newChecks do not overwrite previous ones
-        if lty > resY - 2 then lty = 3 end --resets lty to original value if it would otherwise run into bounding box
-        os.sleep(math.random() + .6) --creates the illusion of the check taking time for fun
-        local s, e = pcall(toLoad) --protected call to silence errors when running the provided function, will check if it suceeded
+        local cy = lty
+        gpu.set(3, lty, '☐ ' .. name)
+        lty = lty + 1
+        if lty > resY - 2 then lty = 3 end
+        os.sleep(math.random() + .6)
+        local s, e = pcall(toLoad)
         local of = gpu.getForeground()
-        if s then --if it did suceed
-            gpu.setForeground(0x00ff00) -- solid green
+        if s then
+            gpu.setForeground(0x00ff00)
             gpu.set(3, cy, '☑')
             gpu.setForeground(of)
-        else --if it did not
+        else
             icl = icl .. name .. ", "
             hang = true
-            gpu.setForeground(0xff0000) -- solid red
+            gpu.setForeground(0xff0000)
             gpu.set(3, cy, '☒')
             gpu.setForeground(of)
             os.sleep(1)
@@ -63,13 +61,13 @@ local function newCheck(name, toLoad)
     end)
 end
 
-newCheck("GPU API", function() end)       --we already know the gpu works if this is being displayed, so no need to ask it to do more
+newCheck("GPU API", function() end)
 os.sleep(math.random() * .3 + .1)
-newCheck("COMPONENT API", function() end) --same here, cmp is a prerequisite for gpu
+newCheck("COMPONENT API", function() end)
 os.sleep(math.random() * .3 + .1)
-newCheck("THREADING API", function() end) --the same
+newCheck("THREADING API", function() end)
 os.sleep(math.random() * .3 + .1)
-newCheck("COMPUTER API", function() end)  --how are you running a computer program with no computer?
+newCheck("COMPUTER API", function() end)
 os.sleep(math.random() * .3 + .1)
 newCheck("TERMINAL API", function() term = require("term") end)
 os.sleep(math.random() * .3 + .1)
@@ -86,10 +84,10 @@ newCheck("TORCH ADDRESS INDEX",
         end
     end)
 os.sleep(math.random() * .3 + .1)
---TODO; more checks for other elements
+
 os.sleep(3.5)
 if hang then
-    comp.beep(1800, .35) --(frequency in hz, time). FULLY BLOCKING! will pause all threads until complete.
+    comp.beep(1800, .35)
     os.sleep(.15)
     comp.beep(1800, .35)
     gpu.setForeground(0xffffff)
@@ -239,6 +237,9 @@ end
 
 local function scram() setRods("RED", 0); setRods("YELLOW", 0); setRods("GREEN", 0); setRods("BLUE", 0); setRods("PURPLE", 0); comp.beep(1800, .75); comp.beep(2000, 1) end
 
+local graphID=0
+local gHist={}
+
 buttonRegistry = {
     --[[
     {X_pos,Y_pos,backColor,foreColor,"text",function}
@@ -250,6 +251,10 @@ buttonRegistry = {
     { 2,        8,  0xd2d2d2, 0,        "---",   textInput,"GREEN" },
     { 2,        10, 0xd2d2d2, 0,        "---",   textInput,"BLUE" },
     { 2,        12, 0xd2d2d2, 0,        "---",   textInput,"PURPLE" },
+    {5, resY-13, 0x00ff00, 0, "GRAPH", function() graphID=1;gHist={} end, nil},
+    {15, resY-13, 0x00ff00, 0, "GRAPH", function() graphID=2;gHist={} end, nil},
+    {27, resY-13, 0x00ff00, 0, "GRAPH", function() graphID=3;gHist={} end, nil},
+    {39, resY-13, 0x00ff00, 0, "GRAPH", function() graphID=4;gHist={} end, nil},
     { resX - 11, 1, 0xff7000, 0,        "SCRAM",scram,nil }
 }
 function loadPreset(btn)
@@ -340,8 +345,9 @@ gpu.setBackground(0xffffff)
 gpu.fill(1, 1, resX, 2, ' ')
 gpu.setForeground(0)
 gpu.set(1, 1, "RBMK WRECKER 2000")
-gpu.setBackground(0xc3c3c3); gpu.fill(1, 3, 19, 11, ' '); gpu.set(2, 3, "SET  COLOR P LPV")
-checkPresets(); os.sleep(); popButtons()
+gpu.setBackground(0xc3c3c3); gpu.fill(1, 3, 19, 11, ' '); gpu.fill(37,3,resX-36,17,' '); gpu.set(2, 3, "SET  COLOR P LPV"); gpu.set(40,3,"GRAPH")
+gpu.setBackground(0); gpu.fill(38,4,resX-38,15,' ');
+checkPresets(); os.sleep(.05)
 gpu.setBackground(0xa5a5a5)
 gpu.setForeground(0xff0000); gpu.set(buttonRegistry[3][1] + 4, buttonRegistry[3][2], "   RED")
 gpu.setForeground(0xffff00); gpu.set(buttonRegistry[4][1] + 4, buttonRegistry[4][2], "YELLOW")
@@ -352,6 +358,18 @@ gpu.setBackground(0xd2d2d2); gpu.setForeground(0)
 gpu.set(buttonRegistry[3][1] + 13, buttonRegistry[3][2], "---"); gpu.set(buttonRegistry[4][1] + 13, buttonRegistry[4][2],
     "---"); gpu.set(buttonRegistry[5][1] + 13, buttonRegistry[5][2], "---"); gpu.set(buttonRegistry[6][1] + 13,
     buttonRegistry[6][2], "---"); gpu.set(buttonRegistry[7][1] + 13, buttonRegistry[7][2], "---")
+
+local function graph(n)
+    table.insert(gHist,n)
+    if #gHist>resX-38 then table.remove(gHist,1) end
+    local ob = gpu.getBackground()
+    gpu.setBackground(0); gpu.fill(38,4,resX-38,15,' ');
+    gpu.setBackground(0xffffff)
+    for i,v in pairs(gHist) do
+        gpu.set(i+37,18-v,' ')
+    end
+    gpu.setBackground(ob)
+end
 
 local inpFunctions = {}
 
@@ -375,6 +393,7 @@ function inpFunctions.updateColHeat()
     lh = rednet.getInput(redInputSide)
     for h = 1, lh do gpu.set(3, resY - h, ' ') end
     gpu.setForeground(of); gpu.setBackground(ob)
+    if graphID==1 then graph(lh) end
 end
 
 local lfh = 0
@@ -397,6 +416,7 @@ function inpFunctions.updateFuelHeat()
     lfh=rednet.getInput(redInputSide)
     for h = 1, lfh do gpu.set(13, resY - h, ' ') end
     gpu.setForeground(of); gpu.setBackground(ob)
+    if graphID==2 then graph(lfh) end
 end
 
 local ld = 0
@@ -419,6 +439,7 @@ function inpFunctions.updateDepletion()
     ld = rednet.getInput(redInputSide)
     for h = 1, ld do gpu.set(25, resY - h, ' ') end
     gpu.setForeground(of); gpu.setBackground(ob)
+    if graphID==3 then graph(ld) end
 end
 
 function inpFunctions.updateXenon()
@@ -437,8 +458,10 @@ function inpFunctions.updateXenon()
         gpu.set(37, y, '║')
     end
     gpu.setBackground(0x700070)
-    for h = 1, rednet.getInput(redInputSide) do gpu.set(37, resY - h, ' ') end
+    local lx = rednet.getInput(redInputSide)
+    for h = 1, lx do gpu.set(37, resY - h, ' ') end
     gpu.setForeground(of); gpu.setBackground(ob)
+    if graphID==4 then graph(lx) end
 end
 
 function inpFunctions.updateTurbine()
@@ -525,11 +548,13 @@ threading.create(function()
     repeat
         for _, v in pairs(inpFunctions) do
             if not active then break end
-            os.sleep(.15)
+            os.sleep(.05)
             v()
         end
     until not active
 end)
+
+popButtons()
 
 repeat
     local _, _, x, y = require("event").pull("touch")
@@ -556,7 +581,7 @@ repeat
     end
 until not active
 
-active = false --must always be the last instruction
+active = false
 os.sleep(1)
 gpu.setBackground(0)
 gpu.setForeground(0xffffff)
