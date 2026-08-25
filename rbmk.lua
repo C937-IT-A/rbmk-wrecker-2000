@@ -1,20 +1,35 @@
+-- USER INPUTS
 local redInputSide = require("sides").right -- side to take redstone input from
 local autoScram = true -- should the program automatically SCRAM the reactor if meltdown conditions are detected?
-local controlRodRegistry = { -- what are the frequencies for the rod controllers by color?
-    { "b26599b0", "RED" },
-    { "37000bc7", "YELLOW" },
-    { "",         "GREEN" },
-    { "",         "BLUE" },
-    { "",         "PURPLE" }
+
+--[[
+Define RoR frequencies for rod controllers below as strings.
+NOTE: Empty strings will no longer nullify input fields. Use 'nil' instead.
+]]
+local controlRodRegistry = {
+    { nil, "RED" },
+    { nil, "YELLOW" },
+    { nil, "GREEN" },
+    { nil, "BLUE" },
+    { nil, "PURPLE" }
 }
--- frequencies for preprocessed output data
-local dataRegistry = { -- these values need to be 'chewed' by a logic reciever and resent on a seperate channel. NOTE: there MUST be a torch transmitting on each frequency, or the signal from the previous frequency will 'bleed' into the next
-    "2753b1b8",        -- col heat
-    "93061e02",        -- fuel heat
-    "f0a60078",        -- depletion
-    "c2f2282c",        -- xenon poison
-    "684166ec"         -- turbine throughput. oh yeah this one doesnt need 'chewing'
+
+--[[
+Define RoR frequencies for data reading below as strings.
+NOTE: these values need to be mapped by a logic reciever somewhere up the line unless otherwise denoted
+NOTE: there MUST be a torch transmitting on each active frequency, or the signal from the previous frequency will 'bleed' into the next
+          if you wish to deactivate a frequency (prevent bleed), replace the string frequency value with 'nil' or 'false' to skip it.
+          DO NOT remove dataRegistry or its indices! set negative truthy values as denoted above to deactivate data reading.
+]]
+local dataRegistry = {
+    nil,        -- col heat
+    nil,        -- fuel heat
+    nil,        -- depletion
+    nil,        -- xenon poison
+    nil         -- turbine throughput; no mapping required (binary)
 }
+
+-- PROGRAM BODY
 
 local cmp = require("component"); local serial; local fs; local comp = require("computer"); local active = true; local gpu =
     cmp.gpu; local ox, oy =
@@ -273,7 +288,7 @@ end
 
 for _, v in pairs(buttonRegistry) do
     for _, x in pairs(controlRodRegistry) do
-        if x[2] == v[7] and x[1] == '' then
+        if x[2] == v[7] and not x[1] then
             v[6] = function() comp.beep(1500, .05) end; v[5] = "XXX"
         end
     end
@@ -285,7 +300,7 @@ function setRods(color, level)
             RoR.setChannel(v[1])
             RoR.setCustomMapValues({ "setrods!" .. tostring(level), nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil })
             os.sleep()
-            RoR.setPolling(true)
+            RoR.setPolling(true)f
             local rhr
             for _, x in pairs(lrh) do
                 if x[2] == color then
@@ -374,6 +389,7 @@ local inpFunctions = {}
 
 local lh = 0
 function inpFunctions.updateColHeat()
+    if not dataRegistry[1] then return end
     input.setChannel(dataRegistry[1]); input.setPolling(true); input.setCustomMap(false)
     os.sleep(.1)
     local of = gpu.getForeground(); local ob = gpu.getBackground()
@@ -397,6 +413,7 @@ end
 
 local lfh = 0
 function inpFunctions.updateFuelHeat()
+    if not dataRegistry[2] then return end
     input.setChannel(dataRegistry[2]); input.setPolling(true); input.setCustomMap(false)
     os.sleep(.1)
     local of = gpu.getForeground(); local ob = gpu.getBackground()
@@ -420,6 +437,7 @@ end
 
 local ld = 0
 function inpFunctions.updateDepletion()
+    if not dataRegistry[3] then return end
     input.setChannel(dataRegistry[3]); input.setPolling(true); input.setCustomMap(false)
     os.sleep(.1)
     local of = gpu.getForeground(); local ob = gpu.getBackground()
@@ -442,6 +460,7 @@ function inpFunctions.updateDepletion()
 end
 
 function inpFunctions.updateXenon()
+    if not dataRegistry[4] then return end
     input.setChannel(dataRegistry[4]); input.setPolling(true); input.setCustomMap(false)
     os.sleep(.1)
     local of = gpu.getForeground(); local ob = gpu.getBackground()
@@ -464,6 +483,7 @@ function inpFunctions.updateXenon()
 end
 
 function inpFunctions.updateTurbine()
+    if not dataRegistry[5] then return end
     input.setChannel(dataRegistry[5]); input.setPolling(true); input.setCustomMap(false)
     os.sleep(.1)
     local of = gpu.getForeground(); local ob = gpu.getBackground()
@@ -477,6 +497,7 @@ function inpFunctions.updateTurbine()
 end
 
 function inpFunctions.fullDepletion()
+    if not dataRegistry[3] then return end
     input.setChannel(dataRegistry[3]); input.setPolling(true); input.setCustomMap(false)
     os.sleep(.1)
     if ld == 15 then
