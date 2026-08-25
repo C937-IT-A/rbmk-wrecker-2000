@@ -1,0 +1,6 @@
+1. Rework graphing to be more contiguous (treat data points as data points instead of graphical elements)
+2. Suggest & allow manual deliberation for optimal values of scram heat by preset (can't auto set)
+3. Visible text entry when saving presets (optional. maybe pop it into its own reserved spot in the toolbar? popups are very hard to deal with at this level of abstraction)
+4. Gradient rod values for readability (free)
+5. Crane control (lofty!)
+6. Gooning button (i'mn goongning)
