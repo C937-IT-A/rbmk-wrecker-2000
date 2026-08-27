@@ -373,7 +373,7 @@ gpu.set(buttonRegistry[3][1] + 13, buttonRegistry[3][2], "---"); gpu.set(buttonR
     "---"); gpu.set(buttonRegistry[5][1] + 13, buttonRegistry[5][2], "---"); gpu.set(buttonRegistry[6][1] + 13,
     buttonRegistry[6][2], "---"); gpu.set(buttonRegistry[7][1] + 13, buttonRegistry[7][2], "---")
 
-local function graph(n)
+local function graph(n) -- TODO: contiguous graphing
     table.insert(gHist,n)
     if #gHist>resX-38 then table.remove(gHist,1) end
     local ob = gpu.getBackground()
@@ -404,9 +404,11 @@ function inpFunctions.updateColHeat()
         end
         gpu.set(3, y, '║')
     end
-    gpu.setBackground(0xff9000)
     lh = rednet.getInput(redInputSide)
-    for h = 1, lh do gpu.set(3, resY - h, ' ') end
+    for h = 1, lh do
+        gpu.setBackground((0xff0000/15*h)+(0xffff00/h)) -- NOTE: Test me!
+        gpu.set(3, resY - h, ' ')
+    end
     gpu.setForeground(of); gpu.setBackground(ob)
     if graphID==1 then graph(lh) end
 end
@@ -428,9 +430,11 @@ function inpFunctions.updateFuelHeat()
         end
         gpu.set(13, y, '║')
     end
-    gpu.setBackground(0xff9000)
     lfh=rednet.getInput(redInputSide)
-    for h = 1, lfh do gpu.set(13, resY - h, ' ') end
+    for h = 1, lfh do
+        gpu.set(13, resY - h, ' ')
+        gpu.setBackground((0xff0000/15*h)+(0xffff00/h)) -- NOTE: Test me!
+    end
     gpu.setForeground(of); gpu.setBackground(ob)
     if graphID==2 then graph(lfh) end
 end
@@ -452,9 +456,11 @@ function inpFunctions.updateDepletion()
         end
         gpu.set(25, y, '║')
     end
-    gpu.setBackground(0x4b4b4b)
     ld = rednet.getInput(redInputSide)
-    for h = 1, ld do gpu.set(25, resY - h, ' ') end
+    for h = 1, ld do
+        gpu.setBackground((0xaaaaaa/15*h)+(0x404040/h)) -- NOTE: Test me!
+        gpu.set(25, resY - h, ' ')
+    end
     gpu.setForeground(of); gpu.setBackground(ob)
     if graphID==3 then graph(ld) end
 end
@@ -475,9 +481,11 @@ function inpFunctions.updateXenon()
         end
         gpu.set(37, y, '║')
     end
-    gpu.setBackground(0x700070)
     local lx = rednet.getInput(redInputSide)
-    for h = 1, lx do gpu.set(37, resY - h, ' ') end
+    for h = 1, lx do
+        gpu.setBackground((0x300030/15*h)+(0xaa00aa/h)) -- NOTE: Test me!
+        gpu.set(37, resY - h, ' ')
+    end
     gpu.setForeground(of); gpu.setBackground(ob)
     if graphID==4 then graph(lx) end
 end
