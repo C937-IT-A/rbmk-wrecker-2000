@@ -373,7 +373,7 @@ gpu.set(buttonRegistry[3][1] + 13, buttonRegistry[3][2], "---"); gpu.set(buttonR
     "---"); gpu.set(buttonRegistry[5][1] + 13, buttonRegistry[5][2], "---"); gpu.set(buttonRegistry[6][1] + 13,
     buttonRegistry[6][2], "---"); gpu.set(buttonRegistry[7][1] + 13, buttonRegistry[7][2], "---")
 
-local function graph(n) -- TODO: contiguous graphing
+local function graph(n)
     table.insert(gHist,n)
     if #gHist>resX-38 then table.remove(gHist,1) end
     local ob = gpu.getBackground()
@@ -389,13 +389,29 @@ local inpFunctions = {}
 
 local lh = 0
 function inpFunctions.updateColHeat()
-    if not dataRegistry[1] then return end
+    if not dataRegistry[1] then then
+        local of = gpu.getForeground(); local ob = gpu.getBackground()
+        gpu.setForeground(0)
+        gpu.setBackground(0xaaaaaa)
+        gpu.set(5, resY - 15, "COL HT.")
+        gpu.set(5, resY - 14, "D/C")
+        for y = resY - 15, resY - 1 do
+            if y % 2 == 0 then
+                gpu.setBackground(0xff0000)
+            else
+                gpu.setBackground(0x800000)
+            end
+            gpu.set(3, y, '║')
+        end
+        gpu.setForeground(of); gpu.setBackground(ob)
+    return end
     input.setChannel(dataRegistry[1]); input.setPolling(true); input.setCustomMap(false)
     os.sleep(.1)
     local of = gpu.getForeground(); local ob = gpu.getBackground()
     gpu.setForeground(0)
     gpu.setBackground(0xaaaaaa)
     gpu.set(5, resY - 15, "COL HT.")
+    gpu.set(5, resY - 14, "CONN.")
     for y = resY - 15, resY - 1 do
         if y % 2 == 0 then
             gpu.setBackground(0x5a5a5a)
@@ -415,13 +431,29 @@ end
 
 local lfh = 0
 function inpFunctions.updateFuelHeat()
-    if not dataRegistry[2] then return end
+    if not dataRegistry[2] then then
+        local of = gpu.getForeground(); local ob = gpu.getBackground()
+        gpu.setForeground(0)
+        gpu.setBackground(0xaaaaaa)
+        gpu.set(15, resY - 15, "FUEL HEAT")
+        gpu.set(15, resY - 14, "D/C")
+        for y = resY - 15, resY - 1 do
+            if y % 2 == 0 then
+                gpu.setBackground(0xff0000)
+            else
+                gpu.setBackground(0x800000)
+            end
+            gpu.set(13, y, '║')
+        end
+        gpu.setForeground(of); gpu.setBackground(ob)
+    return end
     input.setChannel(dataRegistry[2]); input.setPolling(true); input.setCustomMap(false)
     os.sleep(.1)
     local of = gpu.getForeground(); local ob = gpu.getBackground()
     gpu.setForeground(0)
     gpu.setBackground(0xaaaaaa)
     gpu.set(15, resY - 15, "FUEL HEAT")
+    gpu.set(15, resY - 14, "CONN.")
     for y = resY - 15, resY - 1 do
         if y % 2 == 0 then
             gpu.setBackground(0x009000)
@@ -441,13 +473,29 @@ end
 
 local ld = 0
 function inpFunctions.updateDepletion()
-    if not dataRegistry[3] then return end
+    if not dataRegistry[3] then
+        local of = gpu.getForeground(); local ob = gpu.getBackground()
+        gpu.setForeground(0)
+        gpu.setBackground(0xaaaaaa)
+        gpu.set(27, resY - 15, "FUEL DPL.")
+        gpu.set(27, resY - 14, "D/C")
+        for y = resY - 15, resY - 1 do
+            if y % 2 == 0 then
+                gpu.setBackground(0xff0000)
+            else
+                gpu.setBackground(0x800000)
+            end
+            gpu.set(25, y, '║')
+        end
+        gpu.setForeground(of); gpu.setBackground(ob)
+    return end
     input.setChannel(dataRegistry[3]); input.setPolling(true); input.setCustomMap(false)
     os.sleep(.1)
     local of = gpu.getForeground(); local ob = gpu.getBackground()
     gpu.setForeground(0)
     gpu.setBackground(0xaaaaaa)
     gpu.set(27, resY - 15, "FUEL DPL.")
+    gpu.set(27, resY - 14, "CONN.")
     for y = resY - 15, resY - 1 do
         if y % 2 == 0 then
             gpu.setBackground(0x009000)
@@ -466,13 +514,29 @@ function inpFunctions.updateDepletion()
 end
 
 function inpFunctions.updateXenon()
-    if not dataRegistry[4] then return end
+    if not dataRegistry[4] then
+        local of = gpu.getForeground(); local ob = gpu.getBackground()
+        gpu.setForeground(0)
+        gpu.setBackground(0xaaaaaa)
+        gpu.set(39, resY - 15, "Xe PSN")
+        gpu.set(39, resY - 14, "D/C")
+        for y = resY - 15, resY - 1 do
+            if y % 2 == 0 then
+                gpu.setBackground(0xff0000)
+            else
+                gpu.setBackground(0x800000)
+            end
+            gpu.set(37, y, '║')
+        end
+        gpu.setForeground(of); gpu.setBackground(ob)
+    return end
     input.setChannel(dataRegistry[4]); input.setPolling(true); input.setCustomMap(false)
     os.sleep(.1)
     local of = gpu.getForeground(); local ob = gpu.getBackground()
     gpu.setForeground(0)
     gpu.setBackground(0xaaaaaa)
     gpu.set(39, resY - 15, "Xe PSN")
+    gpu.set(39, resY - 14, "CONN.")
     for y = resY - 15, resY - 1 do
         if y % 2 == 0 then
             gpu.setBackground(0x5a5a5a)
@@ -491,10 +555,14 @@ function inpFunctions.updateXenon()
 end
 
 function inpFunctions.updateTurbine()
-    if not dataRegistry[5] then return end
+    local of = gpu.getForeground(); local ob = gpu.getBackground()
+    if not dataRegistry[5] then
+        gpu.setBackground(0xffff00); gpu.setForeground(0)
+        gpu.set(resX - 4, resY - 1, "D/C")
+        gpu.setForeground(of); gpu.setBackground(ob)
+    return end
     input.setChannel(dataRegistry[5]); input.setPolling(true); input.setCustomMap(false)
     os.sleep(.1)
-    local of = gpu.getForeground(); local ob = gpu.getBackground()
     if rednet.getInput(redInputSide) == 0 then
         gpu.setBackground(0); gpu.setForeground(0xffffff)
     else
@@ -505,7 +573,12 @@ function inpFunctions.updateTurbine()
 end
 
 function inpFunctions.fullDepletion()
-    if not dataRegistry[3] then return end
+    if not dataRegistry[3] then
+        local of = gpu.getForeground(); local ob = gpu.getBackground()
+        gpu.setBackground(0xffff00);gpu.setForeground(0)
+        gpu.set(resX - 9, resY - 1, "D/C")
+        gpu.setForeground(of); gpu.setBackground(ob)
+    return end
     input.setChannel(dataRegistry[3]); input.setPolling(true); input.setCustomMap(false)
     os.sleep(.1)
     if ld == 15 then
@@ -535,6 +608,11 @@ end
 
 local oht = false
 function inpFunctions.overheat()
+    if not dataRegistry[1] and not dataRegistry[2] then
+        local of = gpu.getForeground(); local ob = gpu.getBackground()
+        gpu.setBackground(0xffff00); gpu.setForeground(0); gpu.set(resX - 9, resY - 3, "DISCONN.")
+        gpu.setForeground(of); gpu.setBackground(ob)
+    return end
     os.sleep(.1)
     if lh == 15 or lfh == 15 then
         if not oht then
@@ -558,14 +636,14 @@ function inpFunctions.overheat()
                     gpu.setForeground(of); gpu.setBackground(ob)
                 until lh < 15 and lfh < 15
                 of = gpu.getForeground(); ob = gpu.getBackground()
-                gpu.setBackground(0); gpu.setForeground(0xffffff); gpu.set(resX - 9, resY - 3, "OVERHEAT")
+                gpu.setBackground(0); gpu.setForeground(0xff0000); gpu.set(resX - 9, resY - 3, "RESOLVED")
                 gpu.setForeground(of); gpu.setBackground(ob)
                 oht = false
             end)
         end
     else
         local of = gpu.getForeground(); local ob = gpu.getBackground()
-        gpu.setBackground(0); gpu.setForeground(0xffffff); gpu.set(resX - 9, resY - 3, "OVERHEAT")
+        gpu.setBackground(0); gpu.setForeground(0xffffff); gpu.set(resX - 9, resY - 3, "NOMINAL ")
         gpu.setForeground(of); gpu.setBackground(ob)
     end
 end
