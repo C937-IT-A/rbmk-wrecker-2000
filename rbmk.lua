@@ -292,11 +292,6 @@ for i, v in pairs(buttonRegistry) do
             v[6] = function() comp.beep(1500, .05) end; v[5] = "D/C";v[3]=0xffff00
         end
     end
-    for i2,x in pairs(dataRegistry) do
-        if not x and v[7]=="GRAPH_"..tostring(i2) then
-            table.remove(buttonRegistry,i)
-        end
-    end
 end
 function setRods(color, level)
     RoR.setCustomMap(true)
