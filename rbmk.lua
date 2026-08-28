@@ -394,6 +394,7 @@ function inpFunctions.updateColHeat()
         gpu.setForeground(0)
         gpu.setBackground(0xaaaaaa)
         gpu.set(5, resY - 15, "COL HT.")
+        gpu.setBackground(0xffff00)
         gpu.set(5, resY - 14, "D/C")
         for y = resY - 15, resY - 1 do
             if y % 2 == 0 then
@@ -411,6 +412,7 @@ function inpFunctions.updateColHeat()
     gpu.setForeground(0)
     gpu.setBackground(0xaaaaaa)
     gpu.set(5, resY - 15, "COL HT.")
+    gpu.setBackground(0x00ff00)
     gpu.set(5, resY - 14, "CONN.")
     for y = resY - 15, resY - 1 do
         if y % 2 == 0 then
@@ -436,6 +438,7 @@ function inpFunctions.updateFuelHeat()
         gpu.setForeground(0)
         gpu.setBackground(0xaaaaaa)
         gpu.set(15, resY - 15, "FUEL HEAT")
+        gpu.setBackground(0xffff00)
         gpu.set(15, resY - 14, "D/C")
         for y = resY - 15, resY - 1 do
             if y % 2 == 0 then
@@ -453,6 +456,7 @@ function inpFunctions.updateFuelHeat()
     gpu.setForeground(0)
     gpu.setBackground(0xaaaaaa)
     gpu.set(15, resY - 15, "FUEL HEAT")
+    gpu.setBackground(0x00ff00)
     gpu.set(15, resY - 14, "CONN.")
     for y = resY - 15, resY - 1 do
         if y % 2 == 0 then
@@ -478,6 +482,7 @@ function inpFunctions.updateDepletion()
         gpu.setForeground(0)
         gpu.setBackground(0xaaaaaa)
         gpu.set(27, resY - 15, "FUEL DPL.")
+        gpu.setBackground(0xffff00)
         gpu.set(27, resY - 14, "D/C")
         for y = resY - 15, resY - 1 do
             if y % 2 == 0 then
@@ -495,6 +500,7 @@ function inpFunctions.updateDepletion()
     gpu.setForeground(0)
     gpu.setBackground(0xaaaaaa)
     gpu.set(27, resY - 15, "FUEL DPL.")
+    gpu.setBackground(0x00ff00)
     gpu.set(27, resY - 14, "CONN.")
     for y = resY - 15, resY - 1 do
         if y % 2 == 0 then
@@ -519,6 +525,7 @@ function inpFunctions.updateXenon()
         gpu.setForeground(0)
         gpu.setBackground(0xaaaaaa)
         gpu.set(39, resY - 15, "Xe PSN")
+        gpu.setBackground(0xffff00)
         gpu.set(39, resY - 14, "D/C")
         for y = resY - 15, resY - 1 do
             if y % 2 == 0 then
@@ -536,6 +543,7 @@ function inpFunctions.updateXenon()
     gpu.setForeground(0)
     gpu.setBackground(0xaaaaaa)
     gpu.set(39, resY - 15, "Xe PSN")
+    gpu.setBackground(0x00ff00)
     gpu.set(39, resY - 14, "CONN.")
     for y = resY - 15, resY - 1 do
         if y % 2 == 0 then
