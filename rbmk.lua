@@ -265,10 +265,10 @@ buttonRegistry = {
     { 2,        8,  0xd2d2d2, 0,        "---",   textInput,"GREEN" },
     { 2,        10, 0xd2d2d2, 0,        "---",   textInput,"BLUE" },
     { 2,        12, 0xd2d2d2, 0,        "---",   textInput,"PURPLE" },
-    {5, resY-13, 0x00ff00, 0, "GRAPH", function() graphID=1;gHist={} end, nil},
-    {15, resY-13, 0x00ff00, 0, "GRAPH", function() graphID=2;gHist={} end, nil},
-    {27, resY-13, 0x00ff00, 0, "GRAPH", function() graphID=3;gHist={} end, nil},
-    {39, resY-13, 0x00ff00, 0, "GRAPH", function() graphID=4;gHist={} end, nil},
+    {5, resY-13, 0x00ff00, 0, "GRAPH", function() graphID=1;gHist={} end, "GRAPH_1"},
+    {15, resY-13, 0x00ff00, 0, "GRAPH", function() graphID=2;gHist={} end, "GRAPH_2"},
+    {27, resY-13, 0x00ff00, 0, "GRAPH", function() graphID=3;gHist={} end, "GRAPH_3"},
+    {39, resY-13, 0x00ff00, 0, "GRAPH", function() graphID=4;gHist={} end, "GRAPH_4"},
     { resX - 11, 1, 0xff7000, 0,        "SCRAM",scram,nil }
 }
 function loadPreset(btn)
@@ -288,10 +288,15 @@ end
 
 for _, v in pairs(buttonRegistry) do
     for _, x in pairs(controlRodRegistry) do
-        gpu.setBackground(0xd2d2d2)
         if x[2] == v[7] and not x[1] then
-            gpu.setBackground(0xffff00)
-            v[6] = function() comp.beep(1500, .05) end; v[5] = "D/C"
+            v[6] = function() comp.beep(1500, .05) end; v[5] = "D/C";v[3]=0xffff00
+        end
+    end
+    for i,_ in pairs(dataRegistry) do
+        if v[7]=="GRAPH_"..i then
+            v[5]=" D/C "
+            v[3]=0xffff00
+            v[6]=function() comp.beep(1500, .05) end
         end
     end
 end
