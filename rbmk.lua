@@ -389,7 +389,7 @@ local inpFunctions = {}
 
 local lh = 0
 function inpFunctions.updateColHeat()
-    if not dataRegistry[1] then then
+    if not dataRegistry[1] then
         local of = gpu.getForeground(); local ob = gpu.getBackground()
         gpu.setForeground(0)
         gpu.setBackground(0xaaaaaa)
@@ -431,7 +431,7 @@ end
 
 local lfh = 0
 function inpFunctions.updateFuelHeat()
-    if not dataRegistry[2] then then
+    if not dataRegistry[2] then
         local of = gpu.getForeground(); local ob = gpu.getBackground()
         gpu.setForeground(0)
         gpu.setBackground(0xaaaaaa)
