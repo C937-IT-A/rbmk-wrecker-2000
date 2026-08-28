@@ -300,7 +300,7 @@ function setRods(color, level)
             RoR.setChannel(v[1])
             RoR.setCustomMapValues({ "setrods!" .. tostring(level), nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil })
             os.sleep()
-            RoR.setPolling(true)f
+            RoR.setPolling(true)
             local rhr
             for _, x in pairs(lrh) do
                 if x[2] == color then
