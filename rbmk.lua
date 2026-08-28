@@ -293,7 +293,7 @@ for _, v in pairs(buttonRegistry) do
         end
     end
     for i,x in pairs(dataRegistry) do
-        if not x and v[7]=="GRAPH_"..i then
+        if not x and v[7]=="GRAPH_"..tostring(i) then
             v[5]=" D/C "
             v[3]=0xffff00
             v[6]=function() comp.beep(1500, .05) end
