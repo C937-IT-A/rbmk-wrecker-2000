@@ -468,8 +468,8 @@ function inpFunctions.updateFuelHeat()
     end
     lfh=rednet.getInput(redInputSide)
     for h = 1, lfh do
-        gpu.set(13, resY - h, ' ')
         gpu.setBackground(((0xff0000*h)+(0xffff00*(15-h)))/15) -- NOTE: Test me!
+        gpu.set(13, resY - h, ' ')
     end
     gpu.setForeground(of); gpu.setBackground(ob)
     if graphID==2 then graph(lfh) end
