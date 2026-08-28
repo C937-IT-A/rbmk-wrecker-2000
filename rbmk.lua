@@ -304,7 +304,7 @@ function setRods(color, level)
     RoR.setCustomMap(true)
     for _, v in pairs(controlRodRegistry) do
         if v[2] == color then
-            RoR.setChannel(v[1])
+            RoR.setChannel(v[1] or "")
             RoR.setCustomMapValues({ "setrods!" .. tostring(level), nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil })
             os.sleep()
             RoR.setPolling(true)
