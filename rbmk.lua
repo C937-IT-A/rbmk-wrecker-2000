@@ -286,17 +286,15 @@ function loadPreset(btn)
     end
 end
 
-for _, v in pairs(buttonRegistry) do
+for i, v in pairs(buttonRegistry) do
     for _, x in pairs(controlRodRegistry) do
         if x[2] == v[7] and not x[1] then
             v[6] = function() comp.beep(1500, .05) end; v[5] = "D/C";v[3]=0xffff00
         end
     end
-    for i,x in pairs(dataRegistry) do
-        if not x and v[7]=="GRAPH_"..tostring(i) then
-            v[5]=" D/C "
-            v[3]=0xffff00
-            v[6]=function() comp.beep(1500, .05) end
+    for i2,x in pairs(dataRegistry) do
+        if not x and v[7]=="GRAPH_"..tostring(i2) then
+            table.remove(buttonRegistry,i)
         end
     end
 end
