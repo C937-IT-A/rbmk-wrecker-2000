@@ -7,8 +7,8 @@ Define RoR frequencies for rod controllers below as strings.
 NOTE: Empty strings will no longer nullify input fields. Use 'nil' instead.
 ]]
 local controlRodRegistry = {
-    { nil, "RED" },
-    { nil, "YELLOW" },
+    { "b26599b0", "RED" },
+    { "37000bc7", "YELLOW" },
     { nil, "GREEN" },
     { nil, "BLUE" },
     { nil, "PURPLE" }
@@ -288,8 +288,10 @@ end
 
 for _, v in pairs(buttonRegistry) do
     for _, x in pairs(controlRodRegistry) do
+        gpu.setBackground(0xd2d2d2)
         if x[2] == v[7] and not x[1] then
-            v[6] = function() comp.beep(1500, .05) end; v[5] = "XXX"
+            gpu.setBackground(0xffff00)
+            v[6] = function() comp.beep(1500, .05) end; v[5] = "D/C"
         end
     end
 end
