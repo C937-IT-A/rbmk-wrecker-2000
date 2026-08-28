@@ -555,7 +555,7 @@ function inpFunctions.updateXenon()
     end
     local lx = rednet.getInput(redInputSide)
     for h = 1, lx do
-        gpu.setBackground(((0xff00ff*h)+(0xaa0080*(15-h)))/15) -- NOTE: Test me!
+        gpu.setBackground(((0xff00ff*h)+(0x0000ff*(15-h)))/15) -- NOTE: Test me!
         gpu.set(37, resY - h, ' ')
     end
     gpu.setForeground(of); gpu.setBackground(ob)
