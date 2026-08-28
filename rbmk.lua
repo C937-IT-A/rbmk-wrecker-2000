@@ -22,11 +22,11 @@ NOTE: there MUST be a torch transmitting on each active frequency, or the signal
           DO NOT remove dataRegistry or its indices! set negative truthy values as denoted above to deactivate data reading.
 ]]
 local dataRegistry = {
-    nil,        -- col heat
-    nil,        -- fuel heat
-    nil,        -- depletion
-    nil,        -- xenon poison
-    nil         -- turbine throughput; no mapping required (binary)
+    "2753b1b8",        -- col heat
+    "93061e02",        -- fuel heat
+    "f0a60078",        -- depletion
+    "c2f2282c",        -- xenon poison
+    "684166ec"         -- turbine throughput; no mapping required (binary)
 }
 
 -- PROGRAM BODY
