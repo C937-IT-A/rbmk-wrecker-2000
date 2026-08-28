@@ -424,7 +424,7 @@ function inpFunctions.updateColHeat()
     end
     lh = rednet.getInput(redInputSide)
     for h = 1, lh do
-        gpu.setBackground((0xff0000/15*h)+(0xffff00/h)) -- NOTE: Test me!
+        gpu.setBackground(((0xff0000*h)+(0xffff00*(15-h)))/15) -- NOTE: Test me!
         gpu.set(3, resY - h, ' ')
     end
     gpu.setForeground(of); gpu.setBackground(ob)
@@ -469,7 +469,7 @@ function inpFunctions.updateFuelHeat()
     lfh=rednet.getInput(redInputSide)
     for h = 1, lfh do
         gpu.set(13, resY - h, ' ')
-        gpu.setBackground((0xff0000/15*h)+(0xffff00/h)) -- NOTE: Test me!
+        gpu.setBackground(((0xff0000*h)+(0xffff00*(15-h)))/15) -- NOTE: Test me!
     end
     gpu.setForeground(of); gpu.setBackground(ob)
     if graphID==2 then graph(lfh) end
@@ -512,7 +512,7 @@ function inpFunctions.updateDepletion()
     end
     ld = rednet.getInput(redInputSide)
     for h = 1, ld do
-        gpu.setBackground((0xaaaaaa/15*h)+(0x404040/h)) -- NOTE: Test me!
+        gpu.setBackground(((0xaaaaaa*h)+(0x404040*(15-h)))/15) -- NOTE: Test me!
         gpu.set(25, resY - h, ' ')
     end
     gpu.setForeground(of); gpu.setBackground(ob)
@@ -555,7 +555,7 @@ function inpFunctions.updateXenon()
     end
     local lx = rednet.getInput(redInputSide)
     for h = 1, lx do
-        gpu.setBackground((0x300030/15*h)+(0xaa00aa/h)) -- NOTE: Test me!
+        gpu.setBackground(((0x300030*h)+(0xaa00aa*(15-h)))/15) -- NOTE: Test me!
         gpu.set(37, resY - h, ' ')
     end
     gpu.setForeground(of); gpu.setBackground(ob)
