@@ -407,7 +407,7 @@ function inpFunctions.updateColHeat()
         gpu.setForeground(of); gpu.setBackground(ob)
     return end
     input.setChannel(dataRegistry[1]); input.setPolling(true); input.setCustomMap(false)
-    os.sleep(.1)
+    os.sleep()
     local of = gpu.getForeground(); local ob = gpu.getBackground()
     gpu.setForeground(0)
     gpu.setBackground(0xaaaaaa)
@@ -451,7 +451,7 @@ function inpFunctions.updateFuelHeat()
         gpu.setForeground(of); gpu.setBackground(ob)
     return end
     input.setChannel(dataRegistry[2]); input.setPolling(true); input.setCustomMap(false)
-    os.sleep(.1)
+    os.sleep()
     local of = gpu.getForeground(); local ob = gpu.getBackground()
     gpu.setForeground(0)
     gpu.setBackground(0xaaaaaa)
@@ -495,7 +495,7 @@ function inpFunctions.updateDepletion()
         gpu.setForeground(of); gpu.setBackground(ob)
     return end
     input.setChannel(dataRegistry[3]); input.setPolling(true); input.setCustomMap(false)
-    os.sleep(.1)
+    os.sleep()
     local of = gpu.getForeground(); local ob = gpu.getBackground()
     gpu.setForeground(0)
     gpu.setBackground(0xaaaaaa)
@@ -538,7 +538,7 @@ function inpFunctions.updateXenon()
         gpu.setForeground(of); gpu.setBackground(ob)
     return end
     input.setChannel(dataRegistry[4]); input.setPolling(true); input.setCustomMap(false)
-    os.sleep(.1)
+    os.sleep()
     local of = gpu.getForeground(); local ob = gpu.getBackground()
     gpu.setForeground(0)
     gpu.setBackground(0xaaaaaa)
@@ -588,7 +588,7 @@ function inpFunctions.fullDepletion()
         gpu.setForeground(of); gpu.setBackground(ob)
     return end
     input.setChannel(dataRegistry[3]); input.setPolling(true); input.setCustomMap(false)
-    os.sleep(.1)
+    os.sleep()
     if ld == 15 then
         threading.create(function()
             local of
@@ -621,7 +621,7 @@ function inpFunctions.overheat()
         gpu.setBackground(0xffff00); gpu.setForeground(0); gpu.set(resX - 9, resY - 3, "DISCONN.")
         gpu.setForeground(of); gpu.setBackground(ob)
     return end
-    os.sleep(.1)
+    os.sleep()
     if lh == 15 or lfh == 15 then
         if not oht then
             local of = gpu.getForeground(); local ob = gpu.getBackground()
@@ -662,7 +662,7 @@ threading.create(function()
     repeat
         for _, v in pairs(inpFunctions) do
             if not active then break end
-            os.sleep(.05)
+            os.sleep()
             v()
         end
     until not active
