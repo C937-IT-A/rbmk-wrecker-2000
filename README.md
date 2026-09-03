@@ -79,6 +79,12 @@
   
       - The ``NOMINAL`` indicator light in the bottom right will rapidly flash red, display the word ``OVERHEAT``, and beep if the column or fuel rod heat data read from the reactor constitutes automatic scram conditions.
 
+5. The Graph
+
+      - The graph in the top right displays current and past data for a given data type selected by pressing the green ``GRAPH`` button next to said type. The graph is extremely basic and may not always appear continuous.
+
+      - I have more important things to do than make the graph look nice.
+
 **KNOWN PROBLEMS**
 
 1. An irrelevant, unread value is being read as the same as the one before it that is read.
