@@ -3,4 +3,3 @@
 3. Visible text entry when saving presets (optional. maybe pop it into its own reserved spot in the toolbar? popups are very hard to deal with at this level of abstraction)
 4. ~~Gradient rod values for readability (free)~~ done
 5. Crane control (lofty!)
-6. Gooning button (i'mn goongning)
