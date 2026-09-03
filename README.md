@@ -20,6 +20,8 @@
 
      - Set up an RoR controller for each control rod column; set controllers that correspond to different rod colors different frequencies, and controllers that correspond to similar rod colors the same frequency.
 
+     - If desired, connect an RoR reader to a fluid gauge between the steam channels and turbine(s) which will allow the computer to indicate if the turbine(s) is/are running.
+
 7. Both Methods (on update as well)
 
      - Edit ``controlRodRegistry`` in the program to correspond to rod controller frequencies by color; ``nil`` if no such frequency or rod color exists.
@@ -64,6 +66,18 @@
       - Click ``SCRAM`` in the toolbar on the top right to set all rod heights to zero immediately. This procedure does *not* vent any gases from the reactor.
 
       - The program will automatically SCRAM if either fuel rod or column heat meets the maximum value (set in the RoR repeater's logic receiver, repeated as analog signal of 15) if ``autoScram`` is set to ``true`` (by default).
+
+4. Reading Data
+
+      - If installed properly, unread values will be denoted as ``D/C`` and read values as ``CONN.`` next to their respective readout.
+
+      - The bars will fill as their respective data approaches its maximum value.
+
+      - The ``TRB`` indicator light in the bottom right will light up green if there is turbine throughput (if transmitted and read).
+
+      - The ``DEP`` indicator light in the bottom right will flash red if the fuel rod has depleted completely.
+  
+      - The ``NOMINAL`` indicator light in the bottom right will rapidly flash red, display the word ``OVERHEAT``, and beep if the column or fuel rod heat data read from the reactor constitutes automatic scram conditions.
 
 **KNOWN PROBLEMS**
 
