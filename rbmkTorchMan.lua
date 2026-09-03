@@ -18,3 +18,6 @@ local fh = io.open("/rbmk/torches.add","w")
 fh:write(transmitterAdd.."\n"..recieverAdd)
 fh:close()
 print("Done!")
+if require("filesystem").exists("/rbmk/rbmk.lua") then print("\nDetected RBMK control program is already installed. Run? (Y/N)\n > ");
+    if string.lower(io.read("*l"))=='y' then os.execute("/rbmk/rbmk.lua") else require("term").clear() end
+end
