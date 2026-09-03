@@ -4,4 +4,5 @@
 4. ~~Gradient rod values for readability (free)~~ done
 5. Crane control (lofty!)
 6. Confirm users want to use presets whose rod heights exceed that of the last used preset
-7. More indicator lights for more non-nominal reactor conditions
+7. More indicator lights for more non-nominal reactor conditions (high XeP)
+8. Indicate optimal fuel rod removal times
