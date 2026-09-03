@@ -1,8 +1,5 @@
-If you aren't using an Internet Card to directly download this to your ingame computer, you'll need to copy over no greater than 255 lines at a time. You may need to copy it over three times; use the insert key (0 on keypad with numlock off).
-
-I would suggest running this program on the highest-spec non-server rack computer available in survival. Tier 3.5 RAM, tier 3 CPU, tier 3 GPU. It probably doesn't matter that much what caliber of HDD you have, but this program is multithreaded and may eat your processing power on low-spec setups. The tier 3 GPU is needed for maximum color depth to be able to differentiate certain colors on screen. The program uses a lot of similar shades of gray in its UI. You also need a t1 redstone card to get input from the receiver. If you don't care to get that data remotely, you still need the receiver torch for the program to compile, though it won't have to be connected to the computer via redstone analog. Do note that if you choose not to use the program for data readouts the display will still be available when running the program, though the displays will all show a value of zero (it will tell you the columns and fuel rods are completely cold, the fuel is not depleted at all, the turbine is not running, etc.)
-
-All values read directly from the RBMK's fuel rod(s) need to be 'chewed' by a Redstone-over-Radio Logic Receiver first. The raw reciever won't know what to do with a redstone signal of 2,000 (representing 2,000 degrees celsius), so it needs to be mapped to the range 0-15 by a logic reciever somewhere down the line and retransmitted as a raw passthrough signal. This does not apply to the turbine indicator, as it is binary and a value too great will manifest as a signal of 15 that can be read by the computer as a 'true' boolean just fine. The turbine value should be read by an RoR Reader connected to a flow gauge set to either deltatick or deltasecond; it really doesn't matter.
-
-I'm still working on this program - changes may occur and you may need to do new things to make your setup compatible with newer versions of the program. I'll try to avoid this where possible, but sometimes you just have to
-    take what you can get.
+**INSTALLATION**
+1. Via Internet
+       Run ``wget -f https://raw.githubusercontent.com/C937-IT-A/rbmk-wrecker-2000/refs/heads/main/rbmk.lua /rbmk/rbmk.lua;``
+       Automatically downloads program to rbmk/rbmk.lua, no
+3. Manual
