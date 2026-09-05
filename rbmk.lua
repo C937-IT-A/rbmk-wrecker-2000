@@ -381,6 +381,9 @@ local function graph(n)
     gpu.setBackground(0); gpu.fill(38,4,resX-38,16,' ');
     gpu.setBackground(0xffffff)
     for i,v in pairs(gHist) do
+        local c='░'
+        if v>=5 then c='▒' elseif v>=10 then c='▓' end
+        gpu.fill(i+37,19-v,1,v,c)
         gpu.set(i+37,19-v,' ')
     end
     gpu.setBackground(ob)
