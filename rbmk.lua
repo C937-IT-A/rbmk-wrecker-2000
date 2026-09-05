@@ -1,6 +1,7 @@
 -- USER INPUTS
 local redInputSide = require("sides").right -- side to take redstone input from
 local autoScram = true -- should the program automatically SCRAM the reactor if meltdown conditions are detected?
+local highXePcutoff = 8 -- what level (1-15) of xenon poison triggers the XEP indicator light?
 
 --[[
 Define RoR frequencies for rod controllers below as strings.
@@ -518,7 +519,18 @@ function inpFunctions.updateDepletion()
     gpu.setForeground(of); gpu.setBackground(ob)
     if graphID==3 then graph(ld) end
 end
-
+local function highXenon(lev)
+    local of = gpu.getForeground(); local ob = gpu.getBackground()
+    if lev >= highXePcutoff then 
+        gpu.setBackground(0xff00ff)
+        gpu.setForeground(0xffffff)
+    else
+        gpu.setForeground(0xffffff)
+        gpu.setBackground(0)
+    end
+    gpu.set(resX-9, resY-5, "XEP")
+    gpu.setForeground(of); gpu.setBackground(ob)
+end
 function inpFunctions.updateXenon()
     if not dataRegistry[4] then
         local of = gpu.getForeground(); local ob = gpu.getBackground()
@@ -558,6 +570,7 @@ function inpFunctions.updateXenon()
         gpu.setBackground(((0xff00ff*h)+(0x0000ff*(15-h)))/15) -- NOTE: Test me!
         gpu.set(37, resY - h, ' ')
     end
+    highXenon(lx)
     gpu.setForeground(of); gpu.setBackground(ob)
     if graphID==4 then graph(lx) end
 end
