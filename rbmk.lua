@@ -377,16 +377,16 @@ gpu.set(buttonRegistry[3][1] + 13, buttonRegistry[3][2], "---"); gpu.set(buttonR
 local function graph(n)
     table.insert(gHist,n)
     if #gHist>resX-38 then table.remove(gHist,1) end
-    local ob = gpu.getBackground()
+    local ob = gpu.getBackground(); local of=gpu.getForeground()
     gpu.setBackground(0); gpu.fill(38,4,resX-38,16,' ');
-    gpu.setBackground(0xffffff)
+    gpu.setBackground(0xffffff);gpu.setForeground(0)
     for i,v in pairs(gHist) do
-        local c='░'
-        if v>=5 then c='▒' elseif v>=10 then c='▓' end
-        gpu.fill(i+37,19-v,1,v,c)
+        local c='▓'
+        if v>=6 then c='▒' elseif v>=11 then c='░' end
+        gpu.fill(i+37,19-v+1,1,v,c)
         gpu.set(i+37,19-v,' ')
     end
-    gpu.setBackground(ob)
+    gpu.setBackground(ob); gpu.setForeground(of)
 end
 
 local inpFunctions = {}
