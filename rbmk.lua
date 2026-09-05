@@ -18,8 +18,7 @@ local controlRodRegistry = {
 --[[
 Define RoR frequencies for data reading below as strings.
 NOTE: these values need to be mapped by a logic reciever somewhere up the line unless otherwise denoted
-NOTE: there MUST be a torch transmitting on each active frequency, or the signal from the previous frequency will 'bleed' into the next
-          if you wish to deactivate a frequency (prevent bleed), replace the string frequency value with 'nil' or 'false' to skip it.
+NOTE: if you wish to deactivate a frequency (prevent reading bleed), replace the string frequency value with 'nil' or 'false' to skip it.
           DO NOT remove dataRegistry or its indices! set negative truthy values as denoted above to deactivate data reading.
 ]]
 local dataRegistry = {
