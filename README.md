@@ -1,6 +1,6 @@
 **INSTALLATION**
 1. Via Internet (must have internet card)
-     - Run ``edit /rbmk/rbmk.lua;edit /rbmk/rbmkTorchMan.lua``.
+     - Run ``edit /rbmk/rbmk.lua;edit /rbmk/rbmkTorchMan.lua`` (omit if updating).
   
      - Press CTRL+S and CTRL+W in that order twice.
    
