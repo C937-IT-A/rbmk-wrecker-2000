@@ -485,32 +485,31 @@ local function fullDepletion(lev)
         gpu.setBackground(0xffff00);gpu.setForeground(0)
         gpu.set(resX - 9, resY - 1, "D/C")
         gpu.setForeground(of); gpu.setBackground(ob)
-        return
-    end
-    if lev == 15 then
-        threading.create(function()
-            local of
-            local ob
-            repeat
-                os.sleep(.2)
-                of = gpu.getForeground(); ob = gpu.getBackground()
-                gpu.setBackground(0xff0000); gpu.setForeground(0); gpu.set(resX - 9, resY - 1, "DEP")
-                gpu.setForeground(of); gpu.setBackground(ob)
-                os.sleep(.2)
+    else
+        if lev == 15 then
+            threading.create(function()
+                local of
+                local ob
+                repeat
+                    os.sleep(.2)
+                    of = gpu.getForeground(); ob = gpu.getBackground()
+                    gpu.setBackground(0xff0000); gpu.setForeground(0); gpu.set(resX - 9, resY - 1, "DEP")
+                    gpu.setForeground(of); gpu.setBackground(ob)
+                    os.sleep(.2)
+                    of = gpu.getForeground(); ob = gpu.getBackground()
+                    gpu.setBackground(0); gpu.setForeground(0xffffff); gpu.set(resX - 9, resY - 1, "DEP")
+                    gpu.setForeground(of); gpu.setBackground(ob)
+                until ld < 15
                 of = gpu.getForeground(); ob = gpu.getBackground()
                 gpu.setBackground(0); gpu.setForeground(0xffffff); gpu.set(resX - 9, resY - 1, "DEP")
                 gpu.setForeground(of); gpu.setBackground(ob)
-            until ld < 15
-            of = gpu.getForeground(); ob = gpu.getBackground()
+            end)
+        else
+            local of = gpu.getForeground(); local ob = gpu.getBackground()
             gpu.setBackground(0); gpu.setForeground(0xffffff); gpu.set(resX - 9, resY - 1, "DEP")
             gpu.setForeground(of); gpu.setBackground(ob)
-        end)
-    else
-        local of = gpu.getForeground(); local ob = gpu.getBackground()
-        gpu.setBackground(0); gpu.setForeground(0xffffff); gpu.set(resX - 9, resY - 1, "DEP")
-        gpu.setForeground(of); gpu.setBackground(ob)
+        end
     end
-    gpu.setForeground(of); gpu.setBackground(ob)
 end
 
 local ld = 0
