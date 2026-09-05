@@ -6,3 +6,5 @@
 6. Confirm users want to use presets whose rod heights exceed that of the last used preset
 7. More indicator lights for more non-nominal reactor conditions (high XeP)
 8. Indicate optimal fuel rod removal times
+9. Power throughput readings
+10. Graph annotations (heat to turbine)
