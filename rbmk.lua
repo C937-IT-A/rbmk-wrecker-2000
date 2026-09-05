@@ -662,7 +662,7 @@ threading.create(function()
     repeat
         for _, v in pairs(inpFunctions) do
             if not active then break end
-            os.sleep()
+            os.sleep(.05)
             v()
         end
     until not active
