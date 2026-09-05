@@ -479,6 +479,40 @@ function inpFunctions.updateFuelHeat()
     if graphID==2 then graph(lfh) end
 end
 
+local function fullDepletion(lev)
+    if not dataRegistry[3] then
+        local of = gpu.getForeground(); local ob = gpu.getBackground()
+        gpu.setBackground(0xffff00);gpu.setForeground(0)
+        gpu.set(resX - 9, resY - 1, "D/C")
+        gpu.setForeground(of); gpu.setBackground(ob)
+        return
+    end
+    if lev == 15 then
+        threading.create(function()
+            local of
+            local ob
+            repeat
+                os.sleep(.2)
+                of = gpu.getForeground(); ob = gpu.getBackground()
+                gpu.setBackground(0xff0000); gpu.setForeground(0); gpu.set(resX - 9, resY - 1, "DEP")
+                gpu.setForeground(of); gpu.setBackground(ob)
+                os.sleep(.2)
+                of = gpu.getForeground(); ob = gpu.getBackground()
+                gpu.setBackground(0); gpu.setForeground(0xffffff); gpu.set(resX - 9, resY - 1, "DEP")
+                gpu.setForeground(of); gpu.setBackground(ob)
+            until ld < 15
+            of = gpu.getForeground(); ob = gpu.getBackground()
+            gpu.setBackground(0); gpu.setForeground(0xffffff); gpu.set(resX - 9, resY - 1, "DEP")
+            gpu.setForeground(of); gpu.setBackground(ob)
+        end)
+    else
+        local of = gpu.getForeground(); local ob = gpu.getBackground()
+        gpu.setBackground(0); gpu.setForeground(0xffffff); gpu.set(resX - 9, resY - 1, "DEP")
+        gpu.setForeground(of); gpu.setBackground(ob)
+    end
+    gpu.setForeground(of); gpu.setBackground(ob)
+end
+
 local ld = 0
 function inpFunctions.updateDepletion()
     if not dataRegistry[3] then
@@ -516,9 +550,10 @@ function inpFunctions.updateDepletion()
     end
     ld = rednet.getInput(redInputSide)
     for h = 1, ld do
-        gpu.setBackground(((0xaaaaaa*h)+(0x404040*(15-h)))/15) -- NOTE: Test me!
+        gpu.setBackground(((0x0000ff*h)+(0x404040*(15-h)))/15) -- NOTE: Test me!
         gpu.set(25, resY - h, ' ')
     end
+    fullDepletion(lev)
     gpu.setForeground(of); gpu.setBackground(ob)
     if graphID==3 then graph(ld) end
 end
@@ -534,6 +569,7 @@ local function highXenon(lev)
     gpu.set(resX-9, resY-5, "XEP")
     gpu.setForeground(of); gpu.setBackground(ob)
 end
+
 function inpFunctions.updateXenon()
     if not dataRegistry[4] then
         local of = gpu.getForeground(); local ob = gpu.getBackground()
@@ -594,40 +630,6 @@ function inpFunctions.updateTurbine()
     end
     gpu.set(resX - 4, resY - 1, "TRB")
     gpu.setForeground(of); gpu.setBackground(ob)
-end
-
-function inpFunctions.fullDepletion()
-    if not dataRegistry[3] then
-        local of = gpu.getForeground(); local ob = gpu.getBackground()
-        gpu.setBackground(0xffff00);gpu.setForeground(0)
-        gpu.set(resX - 9, resY - 1, "D/C")
-        gpu.setForeground(of); gpu.setBackground(ob)
-    return end
-    input.setChannel(dataRegistry[3]); input.setPolling(true); input.setCustomMap(false)
-    os.sleep(.1)
-    if ld == 15 then
-        threading.create(function()
-            local of
-            local ob
-            repeat
-                os.sleep(.2)
-                of = gpu.getForeground(); ob = gpu.getBackground()
-                gpu.setBackground(0xff0000); gpu.setForeground(0); gpu.set(resX - 9, resY - 1, "DEP")
-                gpu.setForeground(of); gpu.setBackground(ob)
-                os.sleep(.2)
-                of = gpu.getForeground(); ob = gpu.getBackground()
-                gpu.setBackground(0); gpu.setForeground(0xffffff); gpu.set(resX - 9, resY - 1, "DEP")
-                gpu.setForeground(of); gpu.setBackground(ob)
-            until ld < 15
-            of = gpu.getForeground(); ob = gpu.getBackground()
-            gpu.setBackground(0); gpu.setForeground(0xffffff); gpu.set(resX - 9, resY - 1, "DEP")
-            gpu.setForeground(of); gpu.setBackground(ob)
-        end)
-    else
-        local of = gpu.getForeground(); local ob = gpu.getBackground()
-        gpu.setBackground(0); gpu.setForeground(0xffffff); gpu.set(resX - 9, resY - 1, "DEP")
-        gpu.setForeground(of); gpu.setBackground(ob)
-    end
 end
 
 local oht = false
