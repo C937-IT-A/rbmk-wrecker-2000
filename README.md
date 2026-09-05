@@ -1,12 +1,16 @@
 **INSTALLATION**
 1. Via Internet (must have internet card)
-     - Run ``wget -f https://raw.githubusercontent.com/C937-IT-A/rbmk-wrecker-2000/refs/heads/main/rbmk.lua /rbmk/rbmk.lua;wget -f https://raw.githubusercontent.com/C937-IT-A/rbmk-wrecker-2000/refs/heads/main/rbmkTorchMan.lua /rbmk/rbmkTorchMan.lua;/rbmk/rbmkTorchMan``
+     - Run ``edit /rbmk/rbmk.lua;edit /rbmk/rbmkTorchMan.lua``.
+  
+     - Press CTRL+S and CTRL+W in that order twice.
+   
+     - Run ``wget -f https://raw.githubusercontent.com/C937-IT-A/rbmk-wrecker-2000/refs/heads/main/rbmk.lua /rbmk/rbmk.lua;wget -f https://raw.githubusercontent.com/C937-IT-A/rbmk-wrecker-2000/refs/heads/main/rbmkTorchMan.lua /rbmk/rbmkTorchMan.lua;/rbmk/rbmkTorchMan``.
 
      - Automatically installs both programs and starts up the installation wizard. Current working directory is not relevant, though directory ``/rbmk/`` (absolute path) must not be otherwise in use.
 
 3. Manual
 
-     - Run ``edit /rbmk/rbmk.lua``
+     - Run ``edit /rbmk/rbmk.lua``.
 
      - Copy over text from ``https://raw.githubusercontent.com/C937-IT-A/rbmk-wrecker-2000/refs/heads/main/rbmk.lua`` less than 255 lines at a time.
 
