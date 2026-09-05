@@ -548,7 +548,7 @@ function inpFunctions.updateDepletion()
     end
     ld = rednet.getInput(redInputSide)
     for h = 1, ld do
-        gpu.setBackground(((0x0000ff*h)+(0x404040*(15-h)))/15) -- NOTE: Test me!
+        gpu.setBackground(((0xffffff*h)+(0x000000*(15-h)))/15) -- NOTE: Test me!
         gpu.set(25, resY - h, ' ')
     end
     fullDepletion(lev)
